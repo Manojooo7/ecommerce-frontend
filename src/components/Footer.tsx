@@ -4,7 +4,7 @@ import React from 'react'
 
 export const Footer = () => {
   return (
-    <div className='bg-gray-800 mt-16 p-8 flex gap-8 md:gap-0 flex-col md:flex-row justify-center md:justify-between items-center md:items-start text-white rounded-lg'>
+    <div className='bg-gray-800 mt-16 p-8 flex gap-8 md:gap-0 flex-col md:flex-row justify-center md:justify-between items-center md:items-start text-white'>
       <div className="flex flex-col gap-4 text-gray-400 items-center md:items-start">
         <Link href={'./'} className="flex items-center gap-1">
             <Image
