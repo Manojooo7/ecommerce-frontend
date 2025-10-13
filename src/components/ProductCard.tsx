@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/select"
 import { Button } from './ui/button'
 import { ShoppingCart } from 'lucide-react'
+import useCartStore from '@/stores/cartStore'
+import { toast } from 'sonner'
 
 export const ProductCard = ({product}: {product: ProductType}) => {
     const [productTypes, setProductTypes] = useState({
@@ -27,7 +29,20 @@ export const ProductCard = ({product}: {product: ProductType}) => {
         }))
     }
 
-    console.log("ProductType: ", productTypes);
+    const {addToCart} = useCartStore()
+
+    const handleAddToCart = () =>{
+        addToCart({
+            ...product,
+            quantity: 1,
+            selectedColor: productTypes.color,
+            selectedSize: productTypes.size,
+        })
+
+        toast.success(`${product.name || "Product"} successfully added to cart`)
+    }
+
+    // console.log("ProductType: ", productTypes);
     
   return (
     <Card className='hover:shadow-xl hover:shadow-gray-100 border-1 border-gray-200 shadow-none rounded-lg overflow-hidden p-0'>
@@ -74,7 +89,7 @@ export const ProductCard = ({product}: {product: ProductType}) => {
                 </div>
                 <div className="flex w-full justify-between items-center">
                     <h1 className='text-xl font-bold'>${product.price.toFixed(2)}</h1>
-                    <Button className='text-xs font-medium'>
+                    <Button className='text-xs font-medium' onClick={handleAddToCart}>
                         <ShoppingCart className='w-4 h-4'/>
                         Add to cart
                     </Button>

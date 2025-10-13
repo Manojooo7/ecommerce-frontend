@@ -13,6 +13,14 @@ export const ShippingForm = ({setShippingForm}:{setShippingForm:(data: ShippingF
 
     const form = useForm<ShippingFormInputs>({
         resolver: zodResolver(shippingFormSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            phone: '',
+            address: '',
+            city: '',
+            zipcode: ''
+        }
     })
 
     const router = useRouter();

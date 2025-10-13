@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -14,6 +15,12 @@ export const PaymentForm = () => {
 
     const form = useForm<PaymentFormInputs>({
         resolver: zodResolver(paymentFormSchema),
+        defaultValues: {
+            cardHolder: '',
+            cardNumber: '',
+            expirationDate: '',
+            cvv: '',
+        }
     })
 
     const router = useRouter();
@@ -87,7 +94,7 @@ export const PaymentForm = () => {
           </div>
 
           <Button type='submit' className='w-full'>
-            Continue
+            Checkout
             <ShoppingCartIcon/>
           </Button>
           </form>
