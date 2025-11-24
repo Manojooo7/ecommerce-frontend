@@ -1,8 +1,8 @@
-"use client"
+// "use client"
 import { ProductInteraction } from "@/components/ProductInteraction"
 import { ProductType } from "@/types"
 import Image from "next/image"
-import { useState } from "react"
+import { title } from "process"
 
 
 const product:ProductType = {
@@ -21,25 +21,48 @@ const product:ProductType = {
       green: "/products/1gr.png",
     },
   }
-const CartDetailsPage = () => {
 
-    const [productTypes, setProductTypes] = useState({
-        size: product.sizes[0],
-        color: product.colors[0],
-        quantity: 1
-    })
+  export const generateMetadata = async({params}: {params: {id: string}}) =>{
+
+    // Get Product from db
+    // temporary
+    return {
+        title: product.name,
+        describe: product.description
+    }
+  }
+
+const ProductDetailsPage = async({
+    params,
+    searchParams
+}:
+{
+    params: Promise<{id: string}>,
+    searchParams: Promise<{color: string, size: string}>
+}
+) => {
+
+    const {size, color} = await searchParams;
+    const selectedSize = size || (product.sizes[0] as string);
+    const selectedColor = color || (product.colors[0] as string);
+
+    // const [productTypes, setProductTypes] = useState({
+    //     size: product.sizes[0],
+    //     color: product.colors[0],
+    //     quantity: 1
+    // })
 
   return (
     <div className="flex justify-center w-full align-middle mt-10 p-3 md:px-10 lg:px-16">
         <div className="flex gap-7 md:flex-row flex-col w-full p-3">
             <div className="w-full">
-                <Image alt={product.name} src={product.images[productTypes.color]} width={400} height={400}/>
+                <Image alt={product.name} src={product.images[selectedColor]} width={400} height={400}/>
             </div>
             <div className="flex flex-col gap-4 w-full p-3">
                 <h1 className="text-2xl font-medium">{product.name}</h1>
                 <p className="text-sm">{product.description}</p>
                 <h1 className="text-2xl font-bold">${product.price.toFixed(2)}</h1>
-                <ProductInteraction product={product}/>
+                <ProductInteraction product={product} selectedColor={selectedColor} selectedSize={selectedSize}/>
 
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">
@@ -56,4 +79,4 @@ const CartDetailsPage = () => {
   )
 }
 
-export default CartDetailsPage
+export default ProductDetailsPage
